@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reviews">
+
+<!-- SELECT -->
+<!-- 검색 -->
+<select id="reviewselectDetail" parameterType="Map" resultType="Map">
+SELECT TITLE, CONTENT,REVIEW_ID, IMAGES
+FROM project_nutrients.review
+WHERE REVIEW_ID = #{REVIEW_ID}
+</select>
+<!-- 
+<select id="wholelistselectDetail" parameterType="Map" resultType="Map">
+SELECT TITLE, CONTENT,REVIEW_ID, SUPP_ID, IMAGES
+FROM project_nutrients.review
+WHERE SUPP_ID = #{SUPP_ID}
+</select> -->
+
+<!-- 검색창 -->
+<select id="reviewselect" parameterType="Map" resultType="Map">
+SELECT REVIEW_ID,TITLE,CONTENT, WRITING_DATE
+FROM review 
+</select>
+
+
+<!-- 검색 with pagination-->
+   <select id="reviewselectSearchWithPagination" parameterType="Map" resultType="Map">
+      SELECT *
+      FROM project_nutrients.review
+      limit #{pageBegin}, #{pageScale}
+      ;
+   </select>
+
+<!-- total count -->
+   <select id="reviewselectTotal" parameterType="Map" resultType="int">
+      SELECT count(*) as cnt
+      FROM project_nutrients.review
+      ;
+   </select>  
+
+<!-- insert -->
+<insert id="reviewinsert" parameterType="Map">
+INSERT INTO REVIEW
+(REVIEW_ID, WRITING_DATE, TITLE, CONTENT, VIEW_COUNT, UNIQUE_ID, IMAGES) 
+VALUES
+(#{REVIEW_ID}, NOW(), #{TITLE}, #{CONTENT}, 30, #{UNIQUE_ID}, CONCAT('/images/',#{IMAGES}))
+</insert>
+
+<!-- Update --> 
+<!-- DDL문에서 not null인 값은 업데이트시 꼭 넣어줘야 하는 컬럼 / null값, insert시 생성되는 값들은 update해주지 않아도 됨. -->
+<update id="reviewupdate" parameterType="Map">
+UPDATE review
+SET TITLE = #{TITLE}
+WHERE REVIEW_ID = #{REVIEW_ID}
+</update>
+
+<!-- delete -->
+<!-- 유니크 아이디 COMMON_CODE_ID로 delete -->
+<delete id="reviewdelete" parameterType="Map">
+DELETE FROM REVIEW
+WHERE REVIEW_ID = #{REVIEW_ID}
+</delete>
+ 
+</mapper>

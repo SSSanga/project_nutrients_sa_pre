@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Members">
+
+	<select id="selectByUID" parameterType="Map" resultType="Map">
+    SELECT * 
+    FROM membersandadmin
+    where ID = #{ID}
+	</select>
+ 
+
+<!-- sing up -->
+<insert id="membersinsert" parameterType="Map">
+INSERT INTO membersandadmin
+    (UNIQUE_ID, NAME, ID, PASSWORD, BIRTHDATE, AGE, SEX, ADDRESS, PHONE, REGISTRATIONDATE, EMAIL, ADMINE_ID, HISTORY_ID)
+    VALUES
+    (#{UNIQUE_ID}, #{NAME}, #{ID}, #{PASSWORD}, #{BIRTHDATE}, '30', #{SEX}, #{ADDRESS}, #{PHONE}, NOW(), #{EMAIL}, 'admin', #{HISTORY_ID})
+</insert>
+
+<select id="mypageDetail" parameterType="Map" resultType="Map">
+    SELECT mem.NAME, mem.ID, mem.PASSWORD, mem.BIRTHDATE, mem.AGE, mem.SEX, mem.ADDRESS, mem.PHONE, mem.REGISTRATIONDATE, mem.EMAIL, mem.ADMINE_ID, history.DISEASE
+    FROM membersandadmin AS mem
+	inner join history
+    on mem.HISTORY_ID = history.HISTORY_ID
+    WHERE 1 = 1 
+    <choose>
+        <when test="ID == UNIQUE_ID">
+            AND ID = #{ID} 
+        </when>
+        <when test="UNIQUE_ID == UNIQUE_ID">
+            AND UNIQUE_ID = #{UNIQUE_ID}
+        </when>
+    </choose>
+</select>
+
+<select id="memberList" parameterType="Map" resultType="Map">
+    SELECT UNIQUE_ID, NAME, ID, PASSWORD, BIRTHDATE, AGE, SEX, ADDRESS, PHONE, REGISTRATIONDATE, EMAIL, ADMINE_ID, HISTORY_ID  
+    FROM membersandadmin
+</select>
+<!-- 마이페이지 페이지네이션을 위한 카운트 =  총 회원수 -->
+    <select id="selectcount" parameterType="Map" resultType="int">
+    SELECT COUNT(*)
+    FROM membersandadmin;
+    </select>
+    <!-- 마이페이지 페이지네이션을 위한 페이지 limit -->
+    <select id="selectwithPagination" parameterType="Map" resultType="Map">
+    SELECT UNIQUE_ID, NAME, ID, PASSWORD, BIRTHDATE, AGE, SEX, ADDRESS, PHONE, REGISTRATIONDATE, EMAIL, ADMINE_ID, HISTORY_ID  
+    FROM membersandadmin
+    LIMIT #{pageBegin},#{pageScale}
+    </select>
+
+<delete id="memberdelete" parameterType="Map">
+  DELETE FROM membersandadmin
+  WHERE UNIQUE_ID = #{UNIQUE_ID}
+</delete>
+
+<update id="memberupdate" parameterType="Map">
+  UPDATE membersandadmin
+  SET
+    NAME = #{NAME},
+    ID = #{ID},
+    PASSWORD = #{PASSWORD},
+    BIRTHDATE = #{BIRTHDATE},
+    SEX = #{SEX},
+    ADDRESS = #{ADDRESS},
+    PHONE = #{PHONE},
+    EMAIL = #{EMAIL},
+    HISTORY_ID= #{HISTORY_ID},
+    REGISTRATIONDATE = NOW()   <!-- 수정시 현재 날짜로 나오도록 하드코딩 -->
+  WHERE UNIQUE_ID = #{UNIQUE_ID}
+</update>
+
+</mapper>

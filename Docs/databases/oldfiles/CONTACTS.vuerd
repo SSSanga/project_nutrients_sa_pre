@@ -1,0 +1,483 @@
+{
+  "canvas": {
+    "version": "2.2.11",
+    "width": 2000,
+    "height": 2000,
+    "scrollTop": -437,
+    "scrollLeft": -446,
+    "zoomLevel": 1,
+    "show": {
+      "tableComment": true,
+      "columnComment": true,
+      "columnDataType": true,
+      "columnDefault": true,
+      "columnAutoIncrement": false,
+      "columnPrimaryKey": true,
+      "columnUnique": false,
+      "columnNotNull": true,
+      "relationship": true
+    },
+    "database": "MySQL",
+    "databaseName": "",
+    "canvasType": "ERD",
+    "language": "GraphQL",
+    "tableCase": "pascalCase",
+    "columnCase": "camelCase",
+    "highlightTheme": "VS2015",
+    "bracketType": "none",
+    "setting": {
+      "relationshipDataTypeSync": true,
+      "relationshipOptimization": false,
+      "columnOrder": [
+        "columnName",
+        "columnDataType",
+        "columnNotNull",
+        "columnUnique",
+        "columnAutoIncrement",
+        "columnDefault",
+        "columnComment"
+      ]
+    },
+    "pluginSerializationMap": {}
+  },
+  "table": {
+    "tables": [
+      {
+        "name": "User",
+        "comment": "작성자",
+        "columns": [
+          {
+            "name": "User_ID",
+            "comment": "작성자_ID",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 61.22998046875,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "9a0b80df-3cad-43ed-aad6-8e7344e465e8"
+          },
+          {
+            "name": "Name",
+            "comment": "이름",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "33034123-10c3-4293-ad74-da214e636249"
+          },
+          {
+            "name": "E-mail",
+            "comment": "이메일",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "1e05c11f-0443-443c-8b00-debbbce114e1"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 530.9468,
+          "top": 629.6147,
+<<<<<<< HEAD:Docs/databases/Contacts.vuerd
+          "zIndex": 1,
+=======
+          "zIndex": 2,
+>>>>>>> f72e4a4d78b8d3d4edfebff5278f59b5be35dc6e:Docs/databases/oldfiles/CONTACTS.vuerd
+          "widthName": 60,
+          "widthComment": 60
+        },
+        "visible": true,
+        "id": "f3e6c3e9-742b-4377-8baf-be1aeaeb6d0f"
+      },
+      {
+        "name": "Admin",
+        "comment": "관리자",
+        "columns": [
+          {
+            "name": "Admin_ID",
+            "comment": "관리자_ID",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 61.22998046875,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "6e985f07-1879-45be-8689-553b2b70d88e"
+          },
+          {
+            "name": "Name",
+            "comment": "이름",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "b0861194-e73c-4419-9f72-473c715b7822"
+          },
+          {
+            "name": "E-mail",
+            "comment": "이메일",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "aaa7e9eb-0bf1-4bdf-a27f-8c011c46bd41"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 537.347,
+          "top": 896.9994,
+<<<<<<< HEAD:Docs/databases/Contacts.vuerd
+          "zIndex": 2,
+=======
+          "zIndex": 3,
+>>>>>>> f72e4a4d78b8d3d4edfebff5278f59b5be35dc6e:Docs/databases/oldfiles/CONTACTS.vuerd
+          "widthName": 60,
+          "widthComment": 60
+        },
+        "visible": true,
+        "id": "85cf6097-3b77-4aa2-adea-ff4dd4f25e06"
+      },
+      {
+        "name": "Inquiry",
+        "comment": "문의",
+        "columns": [
+          {
+            "name": "Inquiry_ID",
+            "comment": "댓글_ID",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 61.2490234375,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "8850d495-8ad8-448f-8079-3778457b19c9"
+          },
+          {
+            "name": "Date",
+            "comment": "작성일자",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "ad48098a-82c0-4acb-ae45-fac9c0a6583d"
+          },
+          {
+            "name": "Content",
+            "comment": "내용",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "c9b1ee69-555a-498d-aa71-5ed0720181a2"
+          },
+          {
+            "name": "User_ID",
+            "comment": "작성자_ID",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 61.22998046875,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "6a73edd7-8393-4987-a08f-e4e5c0544356"
+          },
+          {
+            "name": "Response",
+            "comment": "응답",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60.5380859375,
+              "widthComment": 60,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "c9656851-30c5-40d8-b113-1e2b219fe0a9"
+          },
+          {
+            "name": "Response_Date",
+            "comment": "응답_일자",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 95.22802734375,
+              "widthComment": 61.22998046875,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "2bd33758-2adf-495b-afb4-de77ee65d228"
+          },
+          {
+            "name": "Admin_ID",
+            "comment": "관리자_ID",
+            "dataType": "VARCHAR(500)",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 61.22998046875,
+              "widthDataType": 94.94873046875,
+              "widthDefault": 60
+            },
+            "id": "b6166e6c-9157-45f3-8841-cfd7326adc61"
+          }
+        ],
+        "ui": {
+          "active": false,
+          "left": 1071.4061,
+          "top": 716.9146,
+<<<<<<< HEAD:Docs/databases/Contacts.vuerd
+          "zIndex": 3,
+=======
+          "zIndex": 4,
+>>>>>>> f72e4a4d78b8d3d4edfebff5278f59b5be35dc6e:Docs/databases/oldfiles/CONTACTS.vuerd
+          "widthName": 60,
+          "widthComment": 60
+        },
+        "visible": true,
+        "id": "138bebf5-a546-4d59-9485-db52a08cde35"
+      }
+    ],
+    "indexes": []
+  },
+  "memo": {
+    "memos": [
+      {
+        "value": "ERD에 대한 설명\n\n작성자(User)와 문의(Inquiry) 간에는 '작성' 관계가 있을 수 있습니다. 한 작성자는 여러 문의를 작성할 수 있으며, 각 문의는 하나의 작성자에 의해 작성됩니다.\n\n관리자(Admin)와 문의(Inquiry) 간에는 '응답' 관계가 있을 수 있습니다. 한 관리자는 여러 문의에 응답할 수 있으며, 각 문의의 응답은 하나의 관리자에 의해 작성됩니다.",
+        "ui": {
+          "active": false,
+          "left": 216,
+          "top": 553,
+<<<<<<< HEAD:Docs/databases/Contacts.vuerd
+          "zIndex": 4,
+=======
+          "zIndex": 1,
+>>>>>>> f72e4a4d78b8d3d4edfebff5278f59b5be35dc6e:Docs/databases/oldfiles/CONTACTS.vuerd
+          "width": 259,
+          "height": 226
+        },
+        "id": "ee3bab68-a0dc-4954-b92c-fe9cceaa4710"
+      }
+    ]
+  },
+  "relationship": {
+    "relationships": [
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "f3e6c3e9-742b-4377-8baf-be1aeaeb6d0f",
+          "columnIds": [
+            "9a0b80df-3cad-43ed-aad6-8e7344e465e8"
+          ],
+          "x": 914.1255109375,
+          "y": 694.8647,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "138bebf5-a546-4d59-9485-db52a08cde35",
+          "columnIds": [
+            "6a73edd7-8393-4987-a08f-e4e5c0544356"
+          ],
+          "x": 1071.4061,
+          "y": 770.0396,
+          "direction": "left"
+        },
+        "constraintName": "fk_user_to_inquiry",
+        "visible": true,
+        "id": "e8f1bde3-1b1b-46c1-b73b-35d7a314e7ca"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "85cf6097-3b77-4aa2-adea-ff4dd4f25e06",
+          "columnIds": [
+            "6e985f07-1879-45be-8689-553b2b70d88e"
+          ],
+          "x": 920.5257109375,
+          "y": 962.2494,
+          "direction": "right"
+        },
+        "end": {
+          "tableId": "138bebf5-a546-4d59-9485-db52a08cde35",
+          "columnIds": [
+            "b6166e6c-9157-45f3-8841-cfd7326adc61"
+          ],
+          "x": 1071.4061,
+          "y": 876.2896,
+          "direction": "left"
+        },
+        "constraintName": "fk_admin_to_inquiry",
+        "visible": true,
+        "id": "470884c0-9847-4d4f-8b17-eebf5f6ec5a8"
+      }
+    ]
+  }
+}

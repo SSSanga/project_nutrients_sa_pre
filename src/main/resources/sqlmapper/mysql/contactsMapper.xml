@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Inquiries">
+
+	<!-- SELECT -->
+	<select id="selectInquiryList" parameterType="Map" resultType="Map">
+		SELECT INQUIRY_ID, WRITING_DATE, CONTENT, RESPONSE, RESPONSE_DATE, ADMINE_ID, UNIQUE_ID
+		FROM project_nutrients.inquiry
+	</select>
+
+	<select id="selectInquiryDetail" parameterType="Map" resultType="Map">
+	SELECT INQUIRY_ID, WRITING_DATE, CONTENT, RESPONSE
+    FROM project_nutrients.inquiry
+	WHERE INQUIRY_ID = #{INQUIRY_ID} ;
+	</select>
+
+	<select id="selectInquiry" parameterType="Map" resultType="Map">
+		SELECT Inquiry_ID, WRITING_DATE, CONTENT, RESPONSE, RESPONSE_DATE, ADMINE_ID, UNIQUE_ID
+		FROM project_nutrients.inquiry
+		where 1 = 1 
+		<choose>
+			<!-- Add your specific conditions here -->
+			<when test="search == 'Inquiry_ID'">
+				AND INQUIRY_ID like CONCAT(#{words}, '%')
+			</when> 
+			<!-- Other conditions based on the Inquiry table structure -->
+		</choose>
+	</select>
+
+
+<select id="contactsselectSearch" parameterType="Map" resultType="Map">
+    SELECT INQUIRY_ID, WRITING_DATE, CONTENT, RESPONSE, RESPONSE_DATE, ADMINE_ID, UNIQUE_ID
+	FROM project_nutrients.inquiry
+    WHERE 1=1 
+    <choose>
+        <when test="searchType == 'CONTENT'">
+            and CONTENT LIKE CONCAT('%', #{words}, '%')
+        </when>
+        <!-- 필요한 다른 검색 조건이 있다면 추가 가능 -->
+    </choose>
+</select>
+   
+   <!-- 검색 with pagination-->
+   <select id="contactsselectSearchWithPagination" parameterType="Map" resultType="Map">
+      SELECT *
+      FROM project_nutrients.inquiry
+      limit #{pageBegin}, #{pageScale}
+      ;
+   </select>
+
+   <!-- total count -->
+   <select id="contactselectTotal" parameterType="Map" resultType="int">
+      SELECT count(*) as cnt
+      FROM project_nutrients.inquiry
+      ;
+   </select>   
+
+	<!-- INSERT -->
+	<insert id="insertInquiry" parameterType="Map">
+		INSERT INTO inquiry
+		(INQUIRY_ID, WRITING_DATE, CONTENT, RESPONSE, RESPONSE_DATE, ADMINE_ID, UNIQUE_ID)
+		VALUES
+		(#{INQUIRY_ID}, NOW(), #{CONTENT},'YES' , now(), 'admine', #{UNIQUE_ID})
+	</insert>
+    
+	<!-- UPDATE -->
+	<update id="updateInquiry" parameterType="Map">
+		UPDATE inquiry
+		SET
+		RESPONSE = #{RESPONSE},
+		RESPONSE_DATE = #{RESPONSE_DATE},
+		ADMINE_ID = #{ADMINE_ID}
+		WHERE Inquiry_ID = #{INQUIRY_ID}
+	</update>
+
+	<!-- DELETE -->
+	<delete id="deleteInquiry" parameterType="Map">
+		DELETE FROM inquiry
+		WHERE INQUIRY_ID = #{INQUIRY_ID}
+	</delete>
+</mapper>

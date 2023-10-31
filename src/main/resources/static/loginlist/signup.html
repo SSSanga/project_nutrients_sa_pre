@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <title>회원가입 페이지</title>
+
+    <link href="./../css/signup.css" rel="stylesheet" />
+    <script src="./../jsp/signup.jsp"></script>
+
+    <style>
+        /* 스타일 내용 생략 */
+    </style>
+
+    <script>
+        function redirectToMain() {
+            window.location.href = "./main.html";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="text-center mt-4 mb-4 h1" >회원가입
+        </div>
+        
+        <form>
+            <div class="input-field">
+                <input id="email" type="text" placeholder="이메일을 입력해 주세요.">
+                <div id="emailError" class="error-message"></div>
+            </div>
+            <div class="input-field">
+                <input id="name" type="text" placeholder="이름을 입력해 주세요.">
+                <div id="nameError" class="error-message"></div>
+            </div>
+            <div class="input-field">
+                <input id="password" type="password" placeholder="비밀번호를 입력해 주세요.">
+                <div id="passwordError" class="error-message"></div>
+            </div>
+            <div class="input-field">
+                <input id="passwordCheck" type="password" placeholder="비밀번호를 다시 입력해 주세요.">
+                <div id="passwordCheckError" class="error-message"></div>
+            </div>
+            <div class="select-field">
+                <select id="area">
+                    <option selected disabled>지역을 선택하세요.</option>
+                    <option>서울</option>
+                    <option>경기</option>
+                    <option>부산</option>
+                    <option>인천</option>
+                    <option>대구</option>
+                    <option>광주</option>
+                    <option>대전</option>
+                    <option>울산</option>
+                    <option>강원</option>
+                    <option>경북</option>
+                    <option>경남</option>
+                    <option>충북</option>
+                    <option>충남</option>
+                    <option>전북</option>
+                    <option>전남</option>
+                    <option>제주</option>
+                </select>
+                <div id="areaError" class="error-message"></div>
+            </div>
+            <div class="radio-field">
+                <input id="gender_man" type="radio" name="gender">
+                <label for="gender_man">남성</label>
+                <input id="gender_woman" type="radio" name="gender">
+                <label for="gender_woman">여성</label>
+                <div id="genderError" class="error-message"></div>
+            </div>
+            <div class="input-field">
+                <input id="phone1" type="text" size="1" maxlength="3" oninput="changePhone1()"> -
+                <input id="phone2" type="text" size="3" maxlength="4" oninput="changePhone2()"> -
+                <input id="phone3" type="text" size="3" maxlength="4" oninput="changePhone3()">
+            </div>
+            <div class="auth-field">
+                <div id="certificationNumber">000000</div>
+                <button disabled id="sendMessage" onclick="getToken()">인증번호 전송</button>
+            </div>
+
+        </div>
+        <div class="auth">
+            <div id="certificationNumber">000000</div>
+            <button disabled id="sendMessage" onclick="getToken()">인증번호 전송</button>
+        </div>
+
+        <div class="timer">
+            <div id="timeLimit">03:00</div>
+            <button disabled id="completion" onclick="checkCompletion()">인증확인</button>
+        </div>
+        <div class="line">
+            <hr>
+        </div>
+        <div class="signUp">
+            <button id="signUpButton" disabled onclick="signUpCheck(); redirectToMain();" formaction="../loginlist/signupcomplete.html">가입하기</button>
+        </div>
+    </div>
+   
+</body>
+</html>

@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Supplement">
+
+<!-- count for pagination -->
+  <select id="selectTotal" parameterType="Map" resultType="int">
+    SELECT COUNT(*)
+        FROM supp_spec
+        WHERE 1 = 1
+        <choose>
+            <when test="search == 'MANUFACTURE'">
+                and MANUFACTURE like CONCAT('%', #{words}, '%')
+            </when>
+            <when test="search == 'PRODUCT'">
+                and PRODUCT like CONCAT('%', #{words}, '%')
+            </when>
+            <when test="search == 'EFFECT'">
+                and EFFECT like CONCAT('%', #{words}, '%')
+            </when>
+        </choose>
+	</select>
+
+<!-- select_wholelist with pagination -->
+  <select id="listwithpaginations" parameterType="Map" resultType="Map">
+        SELECT *
+        FROM supp_spec
+        WHERE 1 = 1
+        <choose>
+            <when test="search == 'MANUFACTURE'">
+                and MANUFACTURE like CONCAT('%', #{words}, '%')
+            </when>
+            <when test="search == 'PRODUCT'">
+                and PRODUCT like CONCAT('%', #{words}, '%')
+            </when>
+            <when test="search == 'EFFECT'">
+                and EFFECT like CONCAT('%', #{words}, '%')
+            </when>
+        </choose>
+        limit #{pageBegin}, #{pageScale};
+  </select>
+
+  <select id="effectresult" parameterType="Map" resultType="Map">
+        SELECT effect.EFFECT
+        FROM effect
+        INNER JOIN supp_list ON effect.EFFECT_ID = supp_list.EFFECT_ID
+        INNER JOIN supp_spec ON supp_list.SUPP_ID = supp_spec.SUPP_ID
+        WHERE supp_spec.SUPP_ID = #{SUPP_ID}
+  </select>
+
+<!-- 추천 누르면 EFFECT_FLAG가 일치할때 나오게끔 -->
+  <select id="recomm" parameterType="Map" resultType="Map">
+        SELECT t_SUPPRECOMM.LOCATION, t_SUPPRECOMM.PRODUCT, t_SUPPRECOMM.LINK, t_SUPPRECOMM.EFFECT_FLAG
+        FROM (SELECT t_LIST.LOCATION, t_LIST.PRODUCT, t_LIST.LINK, t_LIST.EFFECT_FLAG, effect.EFFECT
+        FROM (SELECT DISTINCT supp_spec.LOCATION, supp_spec.SUPP_ID, supp_list.EFFECT_FLAG, supp_spec.PRODUCT, supp_spec.LINK
+        FROM supp_list
+        INNER JOIN supp_spec
+        ON supp_spec.SUPP_ID = supp_list.SUPP_ID) AS t_LIST
+        INNER JOIN effect
+        ON t_LIST.EFFECT_FLAG = effect.EFFECT_ID) AS t_SUPPRECOMM
+        WHERE t_SUPPRECOMM.EFFECT_FLAG = #{EFFECT_FLAG}; 
+  </select>
+
+  <!-- delete -->
+  <!-- 유니크 아이디 COMMON_CODE_ID로 delete -->
+  <delete id="suppdelete" parameterType="Map">
+      DELETE supp_comp, supp_list, supp_side, supp_spec
+      FROM supp_comp
+      LEFT JOIN supp_list ON supp_comp.SUPP_ID = supp_list.SUPP_ID
+      LEFT JOIN supp_side ON supp_comp.SUPP_ID = supp_side.SUPP_ID
+      LEFT JOIN supp_spec ON supp_comp.SUPP_ID = supp_spec.SUPP_ID
+      WHERE supp_comp.SUPP_ID = #{SUPP_ID};
+  </delete>
+
+  <!-- select_suppdetails -->
+
+      <!-- Update --> 
+      <!-- DDL문에서 not null인 값은 업데이트시 꼭 넣어줘야 하는 컬럼 / null값, insert시 생성되는 값들은 update해주지 않아도 됨. -->
+      <update id="suppupdate" parameterType="Map">
+      UPDATE review
+      SET TITLE = #{TITLE},
+      WHERE REVIEW_ID = #{REVIEW_ID};
+      </update>
+
+ <!-- 여기부터 SUPP_ID 기반으로 상세 정보 불러오기       -->
+<!-- 상세정보_기본 이미지 +a -->
+      <select id="selectspec" parameterType="Map" resultType="Map">
+      SELECT LOCATION,SUPP_ID,PRODUCT,MANUFACTURE,LINK, DOSAGE, FREQUENCY
+      FROM supp_spec
+      WHERE SUPP_ID = #{SUPP_ID}
+      </select>
+
+      <!-- 상세정보_effect-->
+  <select id="selecteffect" parameterType="Map" resultType="Map">
+        SELECT t_SPECLIST.SUPP_ID, effect.EFFECT
+      FROM (SELECT t_SPEC.*, supp_list.EFFECT_ID
+      FROM (SELECT SUPP_ID, PRODUCT, MANUFACTURE, DOSAGE, FREQUENCY
+      FROM supp_spec
+      WHERE SUPP_ID = #{SUPP_ID}) AS t_SPEC
+      INNER JOIN supp_list
+      ON t_SPEC.SUPP_ID = supp_list.SUPP_ID) AS t_SPECLIST
+      INNER JOIN effect
+      ON t_SPECLIST.EFFECT_ID= effect.EFFECT_ID;
+            
+  </select>
+        <!-- 상세정보_component-->
+  <select id="selectcomp" parameterType="Map" resultType="Map">
+        SELECT t_SPECCOMP.SUPP_ID, component.COMPONENT
+      FROM (SELECT t_SPEC.SUPP_ID, supp_comp.COMPONENT_ID
+      FROM (SELECT SUPP_ID, PRODUCT, MANUFACTURE, DOSAGE, FREQUENCY
+      FROM supp_spec
+      WHERE SUPP_ID = #{SUPP_ID}) AS t_SPEC
+      INNER JOIN supp_comp
+      ON t_SPEC.SUPP_ID = supp_comp.SUPP_ID) AS t_SPECCOMP
+      INNER JOIN component
+      ON t_SPECCOMP.COMPONENT_ID = component.COMPONENT_ID
+            
+  </select>
+        <!-- 상세정보_sidebad-->
+    <select id="selectbad" parameterType="Map" resultType="Map">
+          SELECT t_SPECSIDE.SUPP_ID, sideeffects.SIDEEFFECT
+      FROM(SELECT t_SPEC.SUPP_ID, supp_side.SIDEEFFECT_ID
+      FROM (SELECT SUPP_ID, PRODUCT, MANUFACTURE, DOSAGE, FREQUENCY
+      FROM supp_spec
+      WHERE SUPP_ID = #{SUPP_ID}) AS t_SPEC
+      INNER JOIN supp_side
+      ON t_SPEC.SUPP_ID = supp_side.SUPP_ID) AS t_SPECSIDE
+      INNER JOIN sideeffects
+      ON t_SPECSIDE.SIDEEFFECT_ID = sideeffects.SIDEEFFECT_ID;
+            
+  </select>
+
+
+
+
+  <!-- 검색창 -->
+    <select id="suppselect" parameterType="Map" resultType="Map">
+          SELECT NAME, COMMON_CODE_ID, PARENT_COMMON_CODE_ID
+          FROM project_nutrients.commons_code
+          WHERE PARENT_COMMON_CODE_ID = #{PARENT_COMMON_CODE_ID};
+    </select>
+
+  <!-- PK의 영양제 SUPP_SPEC 테이블을 먼저 넣은 뒤 FK 위치를 넣어줘야함. 1) SUPP_SPEC, 2) SUPP_LIST(EFFECT),SUPP_COMP, SUPP_SIDE -->
+
+  <!-- 첫 번째 테이블에 데이터 삽입 -->
+  <insert id="insertpk">
+    INSERT INTO supp_spec (SUPP_ID, PRODUCT, MANUFACTURE, DOSAGE, FREQUENCY, LOCATION, LINK)
+    VALUES (#{SUPP_ID}, #{PRODUCT}, #{MANUFACTURE}, #{DOSAGE}, #{FREQUENCY}, CONCAT('/images/', #{LOCATION}), #{LINK})
+  </insert>
+  
+  <!-- 두 번째 테이블에 데이터 삽입 -->
+  <insert id="insertbad">
+    INSERT INTO supp_side (SUPP_ID, SIDEEFFECT_ID)
+    VALUES (#{SUPP_ID}, #{SIDEEFFECT_ID})
+  </insert>
+  
+  <!-- 세 번째 테이블에 데이터 삽입 -->
+  <insert id="insertlist">
+    INSERT INTO supp_list (SUPP_ID, EFFECT_ID, EFFECT_FLAG)
+    VALUES (#{SUPP_ID}, #{EFFECT_ID}, #{EFFECT_ID})
+  </insert>
+  
+  <!-- 네 번째 테이블에 데이터 삽입 -->
+  <insert id="insertcomp">
+    INSERT INTO supp_comp (SUPP_ID, COMPONENT_ID)
+    VALUES (#{SUPP_ID}, #{COMPONENT_ID})
+  </insert>
+
+  <!-- 실제로 여러 테이블에 데이터를 삽입할 때는 상황에 맞게 위의 INSERT 문들을 순서대로 호출합니다. -->
+  <!-- 예를 들어, 여기서는 간단히 호출하는 방법을 보여드리기 위해 SELECT 문 하나로 호출합니다. -->
+  <!-- 여러 테이블에 데이터를 삽입하는 시점에는 하나의 데이터 삽입에 성공한 후 다음 테이블에 데이터를 삽입해야 합니다. -->
+  <!-- 이 부분은 실제로는 호출하지 않습니다. 필요에 따라 다른 적절한 쿼리로 변경해야 합니다. -->
+
+
+
+<select id="selectSearchWithPagination" parameterType="Map" resultType="Map">
+        SELECT * 
+        FROM db_cars.car_infors
+        where 1 = 1 
+        <choose>
+            <when test="search == 'YEAR'">
+            <![CDATA[
+            and YEAR > #{words}
+            ]]>
+            </when>
+            <when test="search == 'CAR_NAME'">
+            and CAR_NAME like CONCAT(#{words}, '%')
+            </when>
+        </choose>      
+          LIMIT #{pageBegin},#{pageScale}
+        ;
+	</select>
+
+     <select id="selectSearch" parameterType="Map" resultType="Map">
+            SELECT DISTINCT t_SEARCH.LOCATION, t_SEARCH.PRODUCT, t_SEARCH.MANUFACTURE, t_SEARCH.LINK
+            FROM (
+                  SELECT t_SUPPEFFECT.SUPP_ID, t_EFFECT.EFFECT, t_SUPPEFFECT.PRODUCT, t_SUPPEFFECT.MANUFACTURE, t_SUPPEFFECT.LOCATION, t_SUPPEFFECT.LINK
+                  FROM (
+                        SELECT DISTINCT supp_spec.SUPP_ID, supp_list.EFFECT_ID, supp_spec.PRODUCT, supp_spec.MANUFACTURE, supp_spec.LOCATION, supp_spec.LINK
+                        FROM supp_list
+                        INNER JOIN supp_spec ON supp_spec.SUPP_ID = supp_list.SUPP_ID
+                  ) AS t_SUPPEFFECT
+                  INNER JOIN effect AS t_EFFECT ON t_SUPPEFFECT.EFFECT_ID = t_EFFECT.EFFECT_ID
+            ) AS t_SEARCH
+            WHERE 1=1 
+    <choose>
+        <when test="search == 'EFFECT'">
+            and t_SEARCH.EFFECT LIKE CONCAT('%', #{words}, '%')
+        </when>
+        <when test="search == 'MANUFACTURE'">
+            and t_SEARCH.MANUFACTURE LIKE CONCAT('%', #{words}, '%')
+        </when>
+    </choose>      
+</select>
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
